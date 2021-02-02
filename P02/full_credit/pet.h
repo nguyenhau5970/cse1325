@@ -1,10 +1,9 @@
 #ifndef __PET_H
 #define __PET_H
 #include <iostream>
-#include <vector>
 
 enum Animal {DOG, CAT, PEN, ELE};
-std::vector<std::string>to_string = {"Dog", "Cat", "Penguin", "Elephant"};
+std::string to_string(Animal ani);
 
 class Pet 
 {
