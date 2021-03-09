@@ -1,0 +1,26 @@
+#ifndef __Card_H
+#define __Card_H
+#include <string>
+
+class Card
+{
+	private:
+   	  std::string question;
+      std::string answer;
+	public:
+   	  Card(string aQuestion, string aAnswer)
+      {
+            question=aQuestion;
+            answer=aAnswer;
+      }
+      
+      Attempt(string aAnswer)
+   	  {
+   	        
+   	 
+   	  }
+     
+};
+
+#endif
+
