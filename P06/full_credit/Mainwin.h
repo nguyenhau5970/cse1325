@@ -18,7 +18,7 @@ class Mainwin : public Gtk::Window {
     private:
         std::vector<Student> students;
         std::vector<Parent> parents;
-        show_data();
+        void show_data();
 
         Gtk::Label *display;                         // Status message display
        
