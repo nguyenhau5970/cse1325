@@ -41,20 +41,17 @@ Mainwin::Mainwin() : nim{nullptr} {
     filemenu->append(*menuitem_quit);
 
     //     INSERT
-    // Create a Help menu and add to the menu bar
     Gtk::MenuItem *menuitem_insert = Gtk::manage(new Gtk::MenuItem("_Insert", true));
     menubar->append(*menuitem_insert);
     Gtk::Menu *insertmenu = Gtk::manage(new Gtk::Menu());
     menuitem_insert->set_submenu(*insertmenu);
 
     //          New Student
-    // Append Rules to the Help menu
     Gtk::MenuItem *menuitem_student = Gtk::manage(new Gtk::MenuItem("_New Student", true));
     menuitem_student->signal_activate().connect([this] {this->on_new_student_click();});
     insertmenu->append(*menuitem_student);
 
     //           New Parent
-    // Append Rules to the Help menu
     Gtk::MenuItem *menuitem_parent = Gtk::manage(new Gtk::MenuItem("_New Parent", true));
     menuitem_parent->signal_activate().connect([this] {this->on_new_parent_click();});
     insertmenu->append(*menuitem_parent);
@@ -64,6 +61,20 @@ Mainwin::Mainwin() : nim{nullptr} {
     Gtk::MenuItem *menuitem_about = Gtk::manage(new Gtk::MenuItem("_About", true));
     menuitem_about->signal_activate().connect([this] {this->on_about_click();});
     insertmenu->append(*menuitem_about);
+    
+    //         Relate
+
+    Gtk::MenuItem *menuitem_relate = Gtk::manage(new Gtk::MenuItem("_Relate", true));
+    menubar->append(*menuitem_relate);
+    Gtk::Menu *relatemenu = Gtk::manage(new Gtk::Menu());
+    menuitem_relate->set_submenu(*relatemenu);
+
+    //         Student to Parent
+    Gtk::MenuItem *menuitem_student_parent = Gtk::manage(new Gtk::MenuItem("_Student to     
+    Parent", true));
+    menuitem_student_parent->signal_activate().connect([this] {this-    
+    >on_student_parent_click();});
+    relatemenu->append(*menuitem_student_parent);
 
     // ///////////// //////////////////////////////////////////////////////////
     // T O O L B A R
@@ -81,10 +92,10 @@ Mainwin::Mainwin() : nim{nullptr} {
     // /////////////////////////// ////////////////////////////////////////////
     // S T I C K S   D I S P L A Y
     // Provide a text entry box to show the remaining sticks
-    sticks = Gtk::manage(new Gtk::Label());
-    sticks->set_hexpand(true);
-    sticks->set_vexpand(true);
-    vbox->add(*sticks);
+    display = Gtk::manage(new Gtk::Label());
+    display->set_hexpand(true);
+    display->set_vexpand(true);
+    vbox->add(*display);
 
     // S T A T U S   B A R   D I S P L A Y ////////////////////////////////////
     // Provide a status bar for game messages
@@ -97,7 +108,7 @@ Mainwin::Mainwin() : nim{nullptr} {
     vbox->show_all();
 
     // Start a new game
-    on_new_game_click();
+    on_new_school_click();
 }
 
 Mainwin::~Mainwin() { }
@@ -107,9 +118,9 @@ Mainwin::~Mainwin() { }
 // /////////////////
 
 void Mainwin::on_new_school_click() {
-    delete nim;
-    nim = new Nim();
-    set_sticks();
+    students.clear();
+    parents.clear();
+    show_data();
 }
 
 void Mainwin::on_new_student_click()
