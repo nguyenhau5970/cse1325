@@ -72,49 +72,6 @@ Mainwin::Mainwin() : nim{nullptr} {
     vbox->pack_start(*toolbar, Gtk::PACK_SHRINK, 0);
     // vbox->add(*toolbar);
 
-    //     N E W   G A M E
-    // Add a new game icon
-    Gtk::ToolButton *new_game_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::NEW));
-    new_game_button->set_tooltip_markup("Create a new game, discarding any in progress");
-    new_game_button->signal_clicked().connect([this] {this->on_new_game_click();});
-    toolbar->append(*new_game_button);
-
-    //     O N E   S T I C K
-    // Add an icon for taking one stick
-    Gtk::Image* button1_image = Gtk::manage(new Gtk::Image{"button1.png"});
-    button1 = Gtk::manage(new Gtk::ToolButton(*button1_image));
-    button1->set_tooltip_markup("Select one stick");
-    button1->signal_clicked().connect([this] {this->on_button_click(1);});
-    toolbar->append(*button1);
-
-    //     T W O   S T I C K S
-    // Add an icon for taking two sticks
-    Gtk::Image* button2_image = Gtk::manage(new Gtk::Image{"button2.png"});
-    button2 = Gtk::manage(new Gtk::ToolButton(*button2_image));
-    button2->set_tooltip_markup("Select two sticks");
-    button2->signal_clicked().connect([this] {this->on_button_click(2);});
-    toolbar->append(*button2);
-
-    //     T H R E E   S T I C K S
-    // Add an icon for taking three sticks
-    Gtk::Image* button3_image = Gtk::manage(new Gtk::Image{"button3.png"});
-    button3 = Gtk::manage(new Gtk::ToolButton(*button3_image));
-    button3->set_tooltip_markup("Select three sticks");
-    button3->signal_clicked().connect([this] {this->on_button_click(3);});
-    toolbar->append(*button3);
-
-    //     C O M P U T E R   P L A Y E R
-    // Add a little space between the 3 stick buttons and computer player
-    Gtk::SeparatorToolItem *sep1 = Gtk::manage(new Gtk::SeparatorToolItem());
-    toolbar->append(*sep1);
-
-    // Add a toggle button to enable computer to play as Player 2
-    Gtk::Image *robot_image = Gtk::manage(new Gtk::Image{"freepik_robot.png"});
-    computer_player = Gtk::manage(new Gtk::ToggleToolButton(*robot_image));
-    computer_player->set_tooltip_markup("Enable for computer to be Player 2");
-    computer_player->signal_clicked().connect([this] {this->on_computer_player_click();});
-    toolbar->append(*computer_player);
-
     //     Q U I T
     // Push the quit botton all the way to the right by setting set_expand true
     Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
@@ -149,29 +106,25 @@ Mainwin::~Mainwin() { }
 // C A L L B A C K S
 // /////////////////
 
-// COMBINED observer / callback
-void Mainwin::on_button_click(int button) {
-    try {
-        // Catch the "impossible" out of sticks exception
-        nim->take_sticks(button);
-        set_sticks();
-    } catch(std::exception& e) {
-        sticks->set_markup("<b>FAIL:</b> " + std::string{e.what()} + ", start new game");
-    }
-}
-
-void Mainwin::on_computer_player_click() {
-    set_sticks();
-}
-
-void Mainwin::on_new_game_click() {
+void Mainwin::on_new_school_click() {
     delete nim;
     nim = new Nim();
     set_sticks();
 }
 
-void Mainwin::on_quit_click() {
-    close();
+void Mainwin::on_new_student_click()
+{
+
+}
+
+void Mainwin::on_new_parent_click()
+{
+
+}
+
+void Mainwin::on_student_parent_click()
+{
+
 }
 
 void Mainwin::on_about_click() {
@@ -179,9 +132,12 @@ void Mainwin::on_about_click() {
     dialog.set_transient_for(*this); // Avoid the discouraging warning
     dialog.set_program_name("SMART");
     dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
-    dialog.set_authors(authors);
     std::vector< Glib::ustring > artists = {
         "Code for Person, Student, and Parent by https://www.gnu.org/, licensed for personal and commercial purposes with attribution https://www.gnu.org/licenses/gpl-3.0.en.html"};
     dialog.set_artists(artists);
     dialog.run();
+}
+
+void Mainwin::on_quit_click() {
+    close();
 }
