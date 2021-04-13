@@ -4,12 +4,12 @@
 #include <fstream>
 #include <string>
 
-Subject::load_subject(std::istream& ist)
-{
-    std::getline(ist, name);
+std::ostream& operator<<(std::ostream& ost, const Subject& subject) {
+    ost << subject_to_string.at(subject);
+    return ost;
 }
 
-void Semester::outstream(std::ostream& ost)
-{
-    ost << name;
+Subject load_subject(std::istream& ist) {
+    std::string name;
+    std::getline(ist, name);
 }
