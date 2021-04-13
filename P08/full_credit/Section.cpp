@@ -9,5 +9,10 @@ Section::Section(std::istream ist){
 }
 
 void Course::save(std::ostream& ost) {
-    ost << _course << " for " << _semester << " " <<_year << "\n";
+    ost << _course << "\n" << _semester << "\n" <<_year << "\n";
+}
+
+std::ostream& operator<<(std::ostream& ost, const Section& Section) {
+    ost << section._course << " for " << section._semester << " " << section._year;
+    return ost;
 }
