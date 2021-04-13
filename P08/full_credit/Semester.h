@@ -1,22 +1,12 @@
 #ifndef __SEMESTER_H
 #define __SEMESTER_H
 
-#include <string>
-#include <vector>
 #include <iostream>
 #include <fstream>
 
-enum class semester {FALL,SPRING,SUMMER};
-const std::vector<std::string> to_string {
-    "fall", "spring", "summer"
-};
+enum class Semester {FALL,SPRING,SUMMER};
 
-class Semester
-{
-public:
-    virtual void outstream(std::ostream& ost)
-    friend ostream& operator<<(ostream& ost, const Semester& sem);
-    load_semester(std::istream& ist); 
-    std::string name;
-};
+std::ostream& operator<<(std::ostream& ost, const Semester& semester);
+Semester load_semester(std::istream& ist);
+
 #endif

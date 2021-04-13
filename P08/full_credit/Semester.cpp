@@ -4,13 +4,21 @@
 #include <fstream>
 #include <string>
 
-Semester::load_semester(std::istream& ist)
-{
-    std::getline(ist, name);
+std::ostream& operator<<(std::ostream& ost, const Semester& semester) {
+    ost << ((semester == Semester::FALL) ? "fall" : (semester == Semester::SPRING) ? "spring" : (semester == Semester::SUMMER) ? "summer");
+    return ost;
 }
 
-void Semester::outstream(std::ostream& ost)
-{
-    ost << name;
+Semester load_semester(std::istream& ist) {
+    std::string name;
+    std::getline(ist, name);
 
+    if(name == "Fall ")
+        return Semester::FALL;
+
+    if(name == "Spring ") 
+        return Semester::SPRING;
+
+    if(name == "Summer ") 
+        return Semester::SUMMER;
 }
