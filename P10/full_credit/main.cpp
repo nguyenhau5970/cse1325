@@ -1,14 +1,10 @@
 #include "puzzle.h"
 #include "solver.h"
-<<<<<<< HEAD
 #include "logger.h"
-=======
->>>>>>> 49ba70431d9004db7490913cd93a6733624ef49b
 
 #include <iostream>
 #include <fstream>
 #include <vector>
-<<<<<<< HEAD
 #include <sstream>
 #include <thread>
 #include <algorithm>  // std::sort
@@ -21,13 +17,6 @@ int main(int argc, char* argv[]) {
     int NUM_THREADS;
     NUM_THREADS = std::stoi(par1);
 
-=======
-
-#include <algorithm>  // std::sort
-
-int main(int argc, char* argv[]) {
-
->>>>>>> 49ba70431d9004db7490913cd93a6733624ef49b
     // Load the puzzles
     std::vector<Puzzle> puzzles;
     for(int i=1; i<argc; ++i) {
@@ -40,7 +29,6 @@ int main(int argc, char* argv[]) {
                       << e.what() << std::endl;
         }
     }
-<<<<<<< HEAD
     
     // Exit if one or more puzzles failed to load
     if((argc-1) != puzzles.size()) exit(-1);     
@@ -86,33 +74,9 @@ int main(int argc, char* argv[]) {
    }
     for(std::thread* t : threads) {
         t->join();
-=======
-
-    // Exit if one or more puzzles failed to load
-    if((argc-1) != puzzles.size()) exit(-1);     
-    
-    // ----- All data loaded -----
-    
-    // Capture the solutions in a vector 
-    std::vector<Solution> solutions;
-
-    // Loop through all of the loaded puzzles
-    for(Puzzle& puzzle : puzzles) {
-
-        // Find each word in the current puzzle
-        for(std::string word : puzzle) {
-        
-            // Instance a Solver, and use it to solve for the word
-            Solver solver{puzzle};
-            Solution s = solver.solve(word);
-            solutions.push_back(s);
-            cout << endl;
-        }
->>>>>>> 49ba70431d9004db7490913cd93a6733624ef49b
     }
     
     std::sort(solutions.begin(), solutions.end());
     for(Solution& s : solutions) std::cout << s << std::endl;
 }
-    
     
