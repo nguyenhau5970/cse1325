@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
             Solver solver{puzzle};
             Solution s = solver.solve(word);
             solutions.push_back(s);
+            cout << endl;
         }
     }
     
