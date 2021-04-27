@@ -15,7 +15,14 @@ int main(int argc, char* argv[]) {
     std::string par1 = std::string(argv[1]);
     
     int NUM_THREADS;
-    NUM_THREADS = std::stoi(par1);
+    try {
+        NUM_THREADS = std::stoi(par1);
+    }
+    catch (std::exception& e) {
+        std::cerr << "cant read threads " << par1 << ": " << e.what() << '\n';
+        exit(-1);
+    }
+    
 
     // Load the puzzles
     std::vector<Puzzle> puzzles;
@@ -41,7 +48,7 @@ int main(int argc, char* argv[]) {
     std::vector<Solution> solutions;
     
     std::vector<std::thread*> threads;
-    std::mutex m;
+    std::mutex mute;
     
     int puzzles_size=puzzles.size();
     const int puzzlesPerThread = 1;
@@ -52,25 +59,27 @@ int main(int argc, char* argv[]) {
     for(int i=0; i<NUM_THREADS; ++i){
         if(i==puzzles.size())
             break;
-        if(i == (NUM_THREADS -1))
-            last = puzzles_size - 1;
         
         threads.push_back(new std::thread{ [&, first, last] 
         {
             for (int j = first; j<=last; j++) {
-                if (j>=puzzles.size())
+                if (j>=puzzles.size()) {
                     break;
+                    }
+                    
                 Puzzle& puzzle = puzzles.at(j);
                 Solver solver{puzzle};
+                
                 for (std::string word : puzzle ) {
-                    Solution S = solver.solve(word);
-                    m.lock();
-                    solutions.push_back(S);
-                    m.unlock();
+                    Solution s = solver.solve(word);
+                    mute.lock();
+                    solutions.push_back(s);
+                    mute.unlock();
                   }
-        }
+            }
         }   
-   } );
+   });
+   
    }
     for(std::thread* t : threads) {
         t->join();
